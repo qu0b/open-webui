@@ -16,3 +16,5 @@ uploads
 .ipynb_checkpoints
 **/*.db
 _test
+llama
+DATABASE

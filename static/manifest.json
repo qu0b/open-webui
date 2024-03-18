@@ -1,6 +1,6 @@
 {
-	"name": "Open WebUI",
-	"short_name": "Open WebUI",
+	"name": "ChatPlugin",
+	"short_name": "ChatPlugin",
 	"start_url": "/",
 	"display": "standalone",
 	"background_color": "#343541",
@@ -10,7 +10,7 @@
 		{
 			"src": "/favicon.png",
 			"type": "image/png",
-			"sizes": "844x884"
+			"sizes": "192×192"
 		}
 	]
 }

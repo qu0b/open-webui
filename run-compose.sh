@@ -152,11 +152,11 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [[ $kill_compose == true ]]; then
-    docker compose down --remove-orphans
+    sudo docker compose down --remove-orphans
     echo -e "${GREEN}${BOLD}Compose project dropped successfully.${NC}"
     exit
 else
-    DEFAULT_COMPOSE_COMMAND="docker compose -f docker-compose.yaml"
+    DEFAULT_COMPOSE_COMMAND="sudo docker compose -f docker-compose.yaml"
     if [[ $enable_gpu == true ]]; then
         # Validate and process command-line arguments
         if [[ -n $gpu_count ]]; then

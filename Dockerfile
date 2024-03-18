@@ -54,8 +54,10 @@ WORKDIR /app/backend
 COPY ./backend/requirements.txt ./requirements.txt
 
 RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
+#RUN pip3 install torch torchvision torchaudio cudatoolkit=12.3.1 --index-url https://download.pytorch.org/whl/cpu --no-cache-dir
+# RUN pip3 install torch torchvision torchaudio cudatoolkit=12.1.1 --no-cache-dir
+RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.7
 
-RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu --no-cache-dir
 RUN pip3 install -r requirements.txt --no-cache-dir
 
 # Install pandoc and netcat

@@ -104,29 +104,31 @@ CHANGELOG = changelog_json
 # CUSTOM_NAME
 ####################################
 
-CUSTOM_NAME = os.environ.get("CUSTOM_NAME", "")
-if CUSTOM_NAME:
-    try:
-        r = requests.get(f"https://api.openwebui.com/api/v1/custom/{CUSTOM_NAME}")
-        data = r.json()
-        if r.ok:
-            if "logo" in data:
-                url = (
-                    f"https://api.openwebui.com{data['logo']}"
-                    if data["logo"][0] == "/"
-                    else data["logo"]
-                )
+# CUSTOM_NAME = os.environ.get("CUSTOM_NAME", "")
+# if CUSTOM_NAME:
+#     try:
+#         r = requests.get(f"https://api.openwebui.com/api/v1/custom/{CUSTOM_NAME}")
+#         data = r.json()
+#         if r.ok:
+#             if "logo" in data:
+#                 url = (
+#                     f"https://api.openwebui.com{data['logo']}"
+#                     if data["logo"][0] == "/"
+#                     else data["logo"]
+#                 )
 
-                r = requests.get(url, stream=True)
-                if r.status_code == 200:
-                    with open("./static/favicon.png", "wb") as f:
-                        r.raw.decode_content = True
-                        shutil.copyfileobj(r.raw, f)
+#                 r = requests.get(url, stream=True)
+#                 if r.status_code == 200:
+#                     with open("./static/favicon.png", "wb") as f:
+#                         r.raw.decode_content = True
+#                         shutil.copyfileobj(r.raw, f)
 
-            WEBUI_NAME = data["name"]
-    except Exception as e:
-        print(e)
-        pass
+#             WEBUI_NAME = data["name"]
+#     except Exception as e:
+#         print(e)
+#         pass
+
+WEBUI_NAME = "ChatPlugin"
 
 
 ####################################
@@ -227,6 +229,10 @@ OLLAMA_BASE_URLS = OLLAMA_BASE_URLS if OLLAMA_BASE_URLS != "" else OLLAMA_BASE_U
 OLLAMA_BASE_URLS = [url.strip() for url in OLLAMA_BASE_URLS.split(";")]
 
 
+####################################
+# OPENAI_API
+####################################
+LLAMA_CPP_BASE_URL = os.environ.get("LLAMA_CPP_BASE_URL", "http://localhost:8080")
 ####################################
 # OPENAI_API
 ####################################

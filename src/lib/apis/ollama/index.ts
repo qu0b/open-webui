@@ -140,7 +140,8 @@ export const generateTitle = async (
 	token: string = '',
 	template: string,
 	model: string,
-	prompt: string
+	prompt: string,
+	options: object = {}
 ) => {
 	let error = null;
 
@@ -158,7 +159,8 @@ export const generateTitle = async (
 		body: JSON.stringify({
 			model: model,
 			prompt: template,
-			stream: false
+			stream: false,
+			options
 		})
 	})
 		.then(async (res) => {

@@ -755,7 +755,8 @@
 				$settings?.titleGenerationPrompt ??
 					"Create a concise, 3-5 word phrase as a header for the following query, strictly adhering to the 3-5 word limit and avoiding the use of the word 'title': {{prompt}}",
 				$settings?.titleAutoGenerateModel ?? selectedModels[0],
-				userPrompt
+				userPrompt,
+				$settings.options
 			);
 
 			if (title) {

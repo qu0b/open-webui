@@ -10,7 +10,7 @@
 		pullModel
 	} from '$lib/apis/ollama';
 	import { WEBUI_API_BASE_URL, WEBUI_BASE_URL } from '$lib/constants';
-	import { WEBUI_NAME, models, user } from '$lib/stores';
+	import { WEBUI_NAME, models, disabledModels, user } from '$lib/stores';
 	import { splitStream } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import { addLiteLLMModel, deleteLiteLLMModel, getLiteLLMModelInfo } from '$lib/apis/litellm';
@@ -59,6 +59,7 @@
 	let uploadProgress = null;
 
 	let deleteModelTag = '';
+
 
 	const pullModelHandler = async () => {
 		const sanitizedModelTag = modelTag.trim();
@@ -384,6 +385,27 @@
 		liteLLMModelInfo = await getLiteLLMModelInfo(localStorage.token);
 	});
 </script>
+
+<div>
+	<div class=" mb-2.5 text-sm font-medium">Enable/Disable Available Models</div>
+	<div class="flex w-full">
+		<div class="flex-1 mr-2">
+			{#each $models as model}
+				<div class="my-1 p-1">
+					<input
+						type="checkbox"
+						bind:checked={model.disabled}
+						class="mr-2"
+						id={model.name}
+						name={model.name}
+						value={model.name}
+					/>
+					<label for={model.name} class="text-gray-700">{model.name}</label>
+				</div>
+			{/each}
+		</div>
+	</div>
+</div>
 
 <div class="flex flex-col h-full justify-between text-sm">
 	<div class=" space-y-3 pr-1.5 overflow-y-scroll h-[23rem]">

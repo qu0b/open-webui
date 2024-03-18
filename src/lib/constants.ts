@@ -12,8 +12,9 @@ export const OPENAI_API_BASE_URL = `${WEBUI_BASE_URL}/openai/api`;
 export const AUDIO_API_BASE_URL = `${WEBUI_BASE_URL}/audio/api/v1`;
 export const IMAGES_API_BASE_URL = `${WEBUI_BASE_URL}/images/api/v1`;
 export const RAG_API_BASE_URL = `${WEBUI_BASE_URL}/rag/api/v1`;
+export const LLAMACPP_API_BASE_URL = `${WEBUI_BASE_URL}/llama.cpp`;
 
-export const WEBUI_VERSION = APP_VERSION;
+export const WEBUI_VERSION = "0.1.0";
 export const REQUIRED_OLLAMA_VERSION = '0.1.16';
 
 export const SUPPORTED_FILE_TYPE = [

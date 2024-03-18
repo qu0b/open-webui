@@ -3,4 +3,4 @@ version: '3.8'
 services:
   ollama:
     volumes:
-      - ${OLLAMA_DATA_DIR-./ollama-data}:/root/.ollama
+      - ${OLLAMA_DATA_DIR-/home/framework/.ollama}:/root/.ollama
