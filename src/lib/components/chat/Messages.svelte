@@ -2,7 +2,7 @@
 	import { v4 as uuidv4 } from 'uuid';
 
 	import { chats, config, modelfiles, settings, user } from '$lib/stores';
-	import { tick } from 'svelte';
+	import { tick, getContext } from 'svelte';
 
 	import { toast } from 'svelte-sonner';
 	import { getChatList, updateChatById } from '$lib/apis/chats';
@@ -13,7 +13,10 @@
 	import Spinner from '../common/Spinner.svelte';
 	import { imageGenerations } from '$lib/apis/images';
 
+	const i18n = getContext('i18n');
+
 	export let chatId = '';
+	export let readOnly = false;
 	export let sendPrompt: Function;
 	export let continueGeneration: Function;
 	export let regenerateResponse: Function;
@@ -67,7 +70,7 @@
 		navigator.clipboard.writeText(text).then(
 			function () {
 				console.log('Async: Copying to clipboard was successful!');
-				toast.success('Copying to clipboard was successful!');
+				toast.success($i18n.t('Copying to clipboard was successful!'));
 			},
 			function (err) {
 				console.error('Async: Could not copy text: ', err);
@@ -315,6 +318,7 @@
 							<UserMessage
 								on:delete={() => messageDeleteHandler(message.id)}
 								user={$user}
+								{readOnly}
 								{message}
 								isFirstMessage={messageIdx === 0}
 								siblings={message.parentId !== null
@@ -333,6 +337,7 @@
 								modelfiles={selectedModelfiles}
 								siblings={history.messages[message.parentId]?.childrenIds ?? []}
 								isLastMessage={messageIdx + 1 === messages.length}
+								{readOnly}
 								{confirmEditResponseMessage}
 								{showPreviousMessage}
 								{showNextMessage}
