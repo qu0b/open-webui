@@ -161,7 +161,9 @@ export const generateTitle = async (
 			model: model,
 			prompt: template,
 			stream: false,
-			options
+			options: {
+				num_predict: 50
+			}
 		})
 	})
 		.then(async (res) => {
@@ -180,7 +182,7 @@ export const generateTitle = async (
 		throw error;
 	}
 
-	return res?.response ?? 'New Chat';
+	return res?.response.replace(/["']/g, '') ?? 'New Chat';
 };
 
 export const generatePrompt = async (token: string = '', model: string, conversation: string) => {

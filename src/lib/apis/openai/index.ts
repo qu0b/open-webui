@@ -1,6 +1,73 @@
 import { OPENAI_API_BASE_URL } from '$lib/constants';
 import { promptTemplate } from '$lib/utils';
 
+export const getOpenAIConfig = async (token: string = '') => {
+	let error = null;
+
+	const res = await fetch(`${OPENAI_API_BASE_URL}/config`, {
+		method: 'GET',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			...(token && { authorization: `Bearer ${token}` })
+		}
+	})
+		.then(async (res) => {
+			if (!res.ok) throw await res.json();
+			return res.json();
+		})
+		.catch((err) => {
+			console.log(err);
+			if ('detail' in err) {
+				error = err.detail;
+			} else {
+				error = 'Server connection failed';
+			}
+			return null;
+		});
+
+	if (error) {
+		throw error;
+	}
+
+	return res;
+};
+
+export const updateOpenAIConfig = async (token: string = '', enable_openai_api: boolean) => {
+	let error = null;
+
+	const res = await fetch(`${OPENAI_API_BASE_URL}/config/update`, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			...(token && { authorization: `Bearer ${token}` })
+		},
+		body: JSON.stringify({
+			enable_openai_api: enable_openai_api
+		})
+	})
+		.then(async (res) => {
+			if (!res.ok) throw await res.json();
+			return res.json();
+		})
+		.catch((err) => {
+			console.log(err);
+			if ('detail' in err) {
+				error = err.detail;
+			} else {
+				error = 'Server connection failed';
+			}
+			return null;
+		});
+
+	if (error) {
+		throw error;
+	}
+
+	return res;
+};
+
 export const getOpenAIUrls = async (token: string = '') => {
 	let error = null;
 
@@ -211,10 +278,12 @@ export const generateOpenAIChatCompletion = async (
 	token: string = '',
 	body: object,
 	url: string = OPENAI_API_BASE_URL
-) => {
+): Promise<[Response | null, AbortController]> => {
+	const controller = new AbortController();
 	let error = null;
 
 	const res = await fetch(`${url}/chat/completions`, {
+		signal: controller.signal,
 		method: 'POST',
 		headers: {
 			Authorization: `Bearer ${token}`,
@@ -231,13 +300,14 @@ export const generateOpenAIChatCompletion = async (
 		throw error;
 	}
 
-	return res;
+	return [res, controller];
 };
 
 export const synthesizeOpenAISpeech = async (
 	token: string = '',
 	speaker: string = 'alloy',
-	text: string = ''
+	text: string = '',
+	model: string = 'tts-1'
 ) => {
 	let error = null;
 
@@ -248,7 +318,7 @@ export const synthesizeOpenAISpeech = async (
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
-			model: 'tts-1',
+			model: model,
 			input: text,
 			voice: speaker
 		})
@@ -293,7 +363,9 @@ export const generateTitle = async (
 					content: template
 				}
 			],
-			stream: false
+			stream: false,
+			// Restricting the max tokens to 50 to avoid long titles
+			max_tokens: 50
 		})
 	})
 		.then(async (res) => {
@@ -312,5 +384,5 @@ export const generateTitle = async (
 		throw error;
 	}
 
-	return res?.choices[0]?.message?.content ?? 'New Chat';
+	return res?.choices[0]?.message?.content.replace(/["']/g, '') ?? 'New Chat';
 };

@@ -16,6 +16,10 @@ __pycache__/
 # C extensions
 *.so
 
+# Pyodide distribution
+static/pyodide/*
+!static/pyodide/pyodide-lock.json
+
 # Distribution / packaging
 .Python
 build/
@@ -298,4 +302,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-DATABASE
+
+# cypress artifacts
+cypress/videos
+cypress/screenshots

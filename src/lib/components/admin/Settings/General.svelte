@@ -123,7 +123,7 @@
 
 				<div class="flex mt-2 space-x-2">
 					<input
-						class="w-full rounded py-1.5 px-4 text-sm dark:text-gray-300 dark:bg-gray-800 outline-none border border-gray-100 dark:border-gray-600"
+						class="w-full rounded-lg py-2 px-4 text-sm dark:text-gray-300 dark:bg-gray-850 outline-none"
 						type="text"
 						placeholder={`https://example.com/webhook`}
 						bind:value={webhookUrl}
@@ -140,7 +140,7 @@
 
 				<div class="flex mt-2 space-x-2">
 					<input
-						class="w-full rounded py-1.5 px-4 text-sm dark:text-gray-300 dark:bg-gray-800 outline-none border border-gray-100 dark:border-gray-600"
+						class="w-full rounded-lg py-2 px-4 text-sm dark:text-gray-300 dark:bg-gray-850 outline-none"
 						type="text"
 						placeholder={`e.g.) "30m","1h", "10d". `}
 						bind:value={JWTExpiresIn}
@@ -159,7 +159,7 @@
 
 	<div class="flex justify-end pt-3 text-sm font-medium">
 		<button
-			class=" px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-gray-100 transition rounded"
+			class=" px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-gray-100 transition rounded-lg"
 			type="submit"
 		>
 			{$i18n.t('Save')}
